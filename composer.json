@@ -1,0 +1,40 @@
+{
+  "name": "yzh52521/think-laravel-orm",
+  "description": "Integrate larravel orm library illuminate/database for thinkphp6",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "thinkphp6",
+    "database",
+    "orm",
+    "sql",
+    "laravel"
+  ],
+  "authors": [
+    {
+      "name": "yuanzhihai",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.5",
+    "topthink/framework": "^6.0",
+    "illuminate/database": "^8.0|^9.0",
+    "illuminate/events": "^8.0|^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "yzh52521\\ThinkLaravel\\": "src/"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "yzh52521\\ThinkLaravel\\Service"
+      ],
+      "config": {
+        "laravelorm": "src/config.php"
+      }
+    }
+  }
+}
