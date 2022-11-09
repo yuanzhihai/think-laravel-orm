@@ -6,7 +6,7 @@ namespace yzh52521\ThinkLaravel;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
-use think\facade\Config;
+use Jenssegers\Mongodb\Connection as MongodbConnection;
 use yzh52521\ThinkLaravel\command\LaravelModel;
 
 class Service extends \think\Service
@@ -22,17 +22,27 @@ class Service extends \think\Service
 
     private function connect()
     {
+        $config      = config( 'laravelorm',[] );
+        $connections = $config['connections'] ?? [];
+        if (!$connections) {
+            return;
+        }
+
         $capsule = new Manager;
-        $capsule->addConnection( [
-            'driver'    => Config::get( 'laravelorm.driver' ),
-            'host'      => Config::get( 'laravelorm.host' ),
-            'database'  => Config::get( 'laravelorm.database' ),
-            'username'  => Config::get( 'laravelorm.username' ),
-            'password'  => Config::get( 'laravelorm.password' ),
-            'charset'   => Config::get( 'laravelorm.charset' ),
-            'collation' => Config::get( 'laravelorm.collation' ),
-            'prefix'    => Config::get( 'laravelorm.prefix' ),
-        ] );
+        $capsule->getDatabaseManager()->extend( 'mongodb',function ($config,$name) {
+            $config['name'] = $name;
+            return new MongodbConnection( $config );
+        } );
+
+        $default = $config['default'] ?? false;
+        if ($default) {
+            $default_config = $connections[$config['default']];
+            $capsule->addConnection( $default_config );
+        }
+
+        foreach ( $connections as $name => $config ) {
+            $capsule->addConnection( $config,$name );
+        }
 
         $capsule->setEventDispatcher( new Dispatcher( new Container ) );
         $capsule->setAsGlobal();
