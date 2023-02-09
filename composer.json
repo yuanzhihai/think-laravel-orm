@@ -18,7 +18,7 @@
   ],
   "require": {
     "php": ">=7.2.5",
-    "topthink/framework": "^6.0",
+    "topthink/framework": ">=6.0",
     "illuminate/database": "^8.0|^9.0",
     "illuminate/events": "^8.0|^9.0"
   },

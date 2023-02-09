@@ -1,6 +1,6 @@
 # think-laravel-orm
 
-喜欢thinkphp6的轻量和目录结构？又想使用laravel框架中更强大更新频率更高的orm来操作数据库？
+喜欢thinkphp6+的轻量和目录结构？又想使用laravel框架中更强大更新频率更高的orm来操作数据库？
 
 
 laravel中使用orm库是[illuminate/database](https://github.com/illuminate/database)
